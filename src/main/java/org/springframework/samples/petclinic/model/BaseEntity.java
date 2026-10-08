@@ -40,7 +40,7 @@ public class BaseEntity implements Serializable {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId( ) {
 		this.id = id;
 	}
 
