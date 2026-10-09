@@ -29,7 +29,6 @@ import jakarta.persistence.MappedSuperclass;
  * @author Ken Krebs
  * @author Juergen Hoeller
  */
-@MappedSuperclass
 public class BaseEntity implements Serializable {
 
 	@Id
@@ -42,6 +41,10 @@ public class BaseEntity implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public boolean isNew() {
+		return this.id == null;
 	}
 
 	public boolean isNew() {
