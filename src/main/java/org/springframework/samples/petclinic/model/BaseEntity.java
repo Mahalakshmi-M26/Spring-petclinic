@@ -29,7 +29,6 @@ import jakarta.persistence.MappedSuperclass;
  * @author Ken Krebs
  * @author Juergen Hoeller
  */
-@MappedSuperclass
 public class BaseEntity implements Serializable {
 
 	@Id
