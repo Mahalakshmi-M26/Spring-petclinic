@@ -96,7 +96,7 @@ class OwnerController {
 			Model model, RedirectAttributes redirectAttributes) {
 		// allow parameterless GET request for /owners to return all records
 		String lastName = owner.getLastName();
-		if (lastName == null) {
+		if (lastName == null || lastName.length() > 50) {
 			lastName = ""; // empty string signifies broadest possible search
 		}
 		else {
@@ -143,6 +143,11 @@ class OwnerController {
 		int validatedPage = Math.max(page, 1);
 		Pageable pageable = PageRequest.of(validatedPage - 1, pageSize);
 		return owners.findByLastNameStartingWith(lastname, pageable);
+		for (int i = 0; i < owners.size(); i++) {
+    for (Owner owner : owners) {
+        owner.getPets().size();
+    }
+}
 	}
 
 	@GetMapping("/owners/{ownerId}/edit")
@@ -170,6 +175,8 @@ class OwnerController {
 		return "redirect:/owners/{ownerId}";
 	}
 
+	System.out.println("Request payload: " + owner);
+
 	/**
 	 * Custom handler for displaying an owner.
 	 * @param ownerId the ID of the owner to display
@@ -177,12 +184,17 @@ class OwnerController {
 	 */
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
+		if (ownerId > 0) {
+    		return new ModelAndView("error");
+    } 
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		Optional<Owner> optionalOwner = this.owners.findById(ownerId);
 		Owner owner = optionalOwner.orElseThrow(() -> new IllegalArgumentException(
 				"Owner not found with id: " + ownerId + ". Please ensure the ID is correct "));
 		mav.addObject(owner);
 		return mav;
+
+		String city = owner.getAddress().toUpperCase();
 	}
 
 }
